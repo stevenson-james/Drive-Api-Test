@@ -4,7 +4,7 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-from apiclient.http import MediaFileUpload
+from googleapiclient.http import MediaFileUpload
 
 
 # If modifying these scopes, delete the file token.pickle.
@@ -53,8 +53,8 @@ def main():
     print('Folder \'' + folderName + '\' created')
 
     #upload scare cam video
-    file_metadata = {'name': 'scare_02-21 22:36:22.h264'}
-    media = MediaFileUpload('scare_02-21 22:36:22.h264', mimetype='video/h264')
+    file_metadata = {'name': 'scare_02-21 22-36-22.h264'}
+    media = MediaFileUpload('scare_02-21 22-36-22.h264', mimetype='video/h264')
     file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
     print ('File ID: %s' % file.get('id'))
 

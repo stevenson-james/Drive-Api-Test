@@ -1,3 +1,15 @@
+'''
+    Author: James Stevenson
+    Section: 2
+    File: googleDrive.py
+    
+    Description:
+    This is a test file to be implemented in the scare cam
+    IoT device. It authenticates a user onto a google drive
+    account, and adds a folder and video to the account if
+    they have not already been added
+'''
+
 from __future__ import print_function
 import pickle
 import os.path
@@ -25,26 +37,26 @@ def main():
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
                 'credentials.json', SCOPES)
-            creds = flow.run_local_server(port = 0)
-            #creds = flow.run_console()
+            # Sign-in for drive account
+            creds = flow.run_console()
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
-    #build the instance for api calls
+    # Build the instance for api calls
     drive_service = build('drive', 'v3', credentials=creds)
     if drive_service:
         print ('Successful connection')
 
     # Create a folder for scare videos on drive account
     folderName = 'Scare Videos'
-
-
+    # Get any current instance of folder in drive account
     results = drive_service.files().list(
         q="mimeType=\'application/vnd.google-apps.folder\' and name = \'" + folderName + "\' and trashed = false",
         pageSize = 1,
         fields = 'files(id, name)').execute()
-    if not results.get('files', []): 
+    # If folder doesn't already exist, add to account
+    if not results.get('files', []):
         file_metadata = {
         'name': folderName,
         'mimeType': 'application/vnd.google-apps.folder'
@@ -52,7 +64,8 @@ def main():
         root_folder = drive_service.files().create(body = file_metadata).execute()
         print('Folder \'%s\' created' % folderName)
 
-    #upload scare cam video
+    # Upload scare cam video (using same process as adding a folder above)
+    # fileName should be changed based on current video
     fileName = 'scare_02-21 22-36-22.h264'
     results = drive_service.files().list(
         q="mimeType=\'video/h264\' and name = \'" + fileName + "\' and trashed = false",

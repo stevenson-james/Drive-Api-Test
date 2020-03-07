@@ -1,13 +1,14 @@
 '''
-    Author: James Stevenson
-    Section: 2
-    File: googleDrive.py
-    
-    Description:
-    This is a test file to be implemented in the scare cam
-    IoT device. It authenticates a user onto a google drive
-    account, and adds a folder and video to the account if
-    they have not already been added
+Author: James Stevenson
+Section: 2
+File: googleDrive.py
+
+Description:
+This is a test file to be implemented in the scare cam
+IoT device. It authenticates a user onto a google drive
+account, and adds a folder and video to the account if
+they have not already been added
+
 '''
 
 from __future__ import print_function
